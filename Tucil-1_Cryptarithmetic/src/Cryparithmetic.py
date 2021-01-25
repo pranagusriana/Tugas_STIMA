@@ -1,5 +1,21 @@
 import time
 
+"""
+Nama: Prana Gusriana
+NIM: 13519195
+TUGAS KECIL 1 IF2211 STRATEGI ALGORITMA - CRYPTARITHMETIC 2020/2021
+
+PROGRAM INI MERUPAKAN PROGRAM UNTUK MENYELESAIKAN PERSOALAN CRYPTARITHMETIC DENGAN MENGGUNAKAN ALGORITMA BRUTE FORCE
+"""
+
+# CATATAN DAN ASUMSI:
+# ASUMSI HURUF PERTAMA TIDAK BOLEH NOL KECUALI PANJANG NYA CUMA 1
+# CONTOH: AB + D = AB MAKA A TIDAK BOLEH 0 TAPI D VALID UNTUK 0
+# UNTUK PEMBACAAN FILE TIDAK MEMINTA MASUKAN PADA USER TETAPI JIKA INGIN MEMBACA FILE
+# SILAHKAN GANTI PARAMETER PEMANGGILAN FUNGSI readInputFromFile DAN saveFile DI MAIN FUNCTION
+# CONTOH: NAMA FILE YANG INGIN DIBACA input1.txt DAN INGIN MENYIMPAN FILE PADA output1.txt
+# MAKA UBAH PEMANGGILAN FUNGSI BACA FILE MENJADI readInputFromFile("input1.txt") DAN saveFile(file_output[0], "output1.txt")
+
 class Cryptarithmetic():
 	def __init__(self, char, first, currVal):
 		self.char = char
@@ -39,8 +55,9 @@ class Cryptarithmetic():
 	def setPosNumber(self):
 		self.posNumber += [self.currVal]
 		
+# FUNGSI UNTUK MEMBACA FILE INPUT DARI FILE
 def readInputFromFile(namaFile):
-	file = open("../doc/"+namaFile ,"r")
+	file = open("../test/"+namaFile ,"r")
 	file_input = file.readlines()
 	i = 0
 	while(i < len(file_input)):
@@ -56,6 +73,7 @@ def readInputFromFile(namaFile):
 	file.close()
 	return file_input
 	
+# FUNGSI UNTUK MEMISAHKAN ANTARA PERTANYAAN DAN JAWABAN
 def distinguishOpr(query, ans, file_input):
 	i = 0
 	stop = False
@@ -75,6 +93,7 @@ def distinguishOpr(query, ans, file_input):
 		i += 1
 	ans += [file_input[i]]
 	
+# FUNGSI UNTUK MEMBUAT ARRAY CHARACTER UNTUK SUBSTITUSI ANGKA PADA SETIAP HURUF
 def buildArrChar(arrChar, query, ans):
 	for i in range(len(query)):
 		for j in range(len(query[i])):
@@ -99,6 +118,7 @@ def buildArrChar(arrChar, query, ans):
 				arrChar[ord(ans[0][i])-65] = Cryptarithmetic(ans[0][i], False, -1)
 		arrChar[ord(ans[0][i])-65].setA([len(ans[0])-i-1])
 		
+# FUNGSI UNTUK MENJUMLAHKAN TOTAL HURUF UNIK
 def sumChar(arrChar):
 	sumChr = 0
 	for i in range(len(arrChar)):
@@ -106,7 +126,9 @@ def sumChar(arrChar):
 			sumChr += 1
 	return sumChr
 	
-def cleanFIrstnol(arrChar):
+# FUNGSI UNTUK MEMENUHI SYARAT HURUF PERTAMA TIDAK BOLEH NOL
+# CATATAN: UNTUK AB+D=AB ITU ASUMSI D NYA VALID UNTUK 0
+def cleanFIrstnol(arrChar, totest, temptotest):
 	idxFirst = []
 	idx = 0
 	idxAr = []
@@ -128,11 +150,14 @@ def cleanFIrstnol(arrChar):
 	for i in range(len(idxFirst)):
 		col = idxAr[i]
 		tempSol =[]
+		temptest = []
 		for j in range(len(arr)):
 			if (arr[j][col]!=0):
 				tempSol += [arr[j]]
+				temptest += [totest[j]]
 		arr = tempSol
-		
+		totest = temptest
+	temptotest += totest
 	for j in range(len(arrChar)):
 		if (arrChar[j] != 0):
 			arrChar[j].posNumber = []
@@ -143,7 +168,8 @@ def cleanFIrstnol(arrChar):
 			if (arrChar[j] != 0):
 				arrChar[j].posNumber += [arr[i][p]]
 				p+=1
-				
+
+# FUNGSI UNTUK MENAMPILKAN SOLUSI	
 def printHasil(arrChar, query, ans, file_input, file_output):
 	file_outputt = ""
 	for i in file_input:
@@ -206,33 +232,19 @@ def printHasil(arrChar, query, ans, file_input, file_output):
 		file_outputt += "Tidak memiliki solusi\n"
 	file_output += [file_outputt]
 		
-def updatePosNumber(arr, arrChar, query, ans):
+# FUNGSI UNTUK MENGUPDATE SUBSTITUSI PADA SETIAP HURUF DAN PENGECEKANAN SOLUSI
+def updatePosNumber(arr, arrChar, query, ans, tes, totest):
 	idx = 0
-	i = 0
-	while(i < len(query)):
-		if (arrChar[ord(query[i][0])-65].currVal == -1 and len(query[i]) > 1):
-			arrChar[ord(query[i][0])-65].setCurrVal(arr[idx])
-			idx += 1
-		i += 1
-	if (arrChar[ord(ans[0][0])-65].currVal == -1 and len(ans[0]) > 1):
-		arrChar[ord(ans[0][0])-65].setCurrVal(arr[idx])
-		idx += 1
-	j = 0
-	while (j < len(arrChar)):
-		if (arrChar[j] != 0):
-			#print(idx, arrChar, arr)
-			if (arrChar[j].first == False):
-				arrChar[j].currVal = arr[idx]
-				idx += 1
-		j += 1
-	
 	sumq = 0
 	suma = 0
 	for i in range(len(arrChar)):
 		if (arrChar[i] != 0):
+			arrChar[i].setCurrVal(arr[idx])
 			sumq += arrChar[i].sumQ()
 			suma += arrChar[i].sumA()
+			idx += 1
 	if (sumq == suma):
+		totest += [tes]
 		for i in range(len(arrChar)):
 			if (arrChar[i] != 0):
 				arrChar[i].setPosNumber()
@@ -241,7 +253,8 @@ def updatePosNumber(arr, arrChar, query, ans):
 		for i in range(len(arrChar)):
 			if (arrChar[i] != 0):
 				arrChar[i].setCurrVal(-1)
-				
+
+# FUNGSI UNTUK MENGECEK ADA YANG MENJADI FIRST ATAU TIDAK (UNTUK DIHILANGKAN SUBSTITUSI 0 PADA HURUF PERTAMA)		
 def isFirstExist(arrChar):
         First = 0
         for i in range(len(arrChar)):
@@ -253,7 +266,8 @@ def isFirstExist(arrChar):
         else:
                 return True
 
-def Solve(arrChar, query, ans, file_input, file_output, tes):
+# FUNGSI UNTUK MENYELESAIKAN PERSOALAN CRYPTARITHMETIC
+def Solve(arrChar, query, ans, file_input, file_output, tes, totest, tempt):
 	totalChar = sumChar(arrChar)
 	
 	if (totalChar == 10):
@@ -277,7 +291,7 @@ def Solve(arrChar, query, ans, file_input, file_output, tes):
 																			for tenth in range(10):
 																				if (tenth != first and tenth != scnd and tenth != thrd and tenth != fourth and tenth != fifth and tenth != sixth and tenth != seventh and tenth != eighth and tenth != nineth):
 																					arr = [first, scnd, thrd, fourth, fifth, sixth, seventh, eighth, nineth, tenth]
-																					updatePosNumber(arr, arrChar, query, ans)
+																					updatePosNumber(arr, arrChar, query, ans, tes[0], totest)
 																					tes[0] += 1
 	elif (totalChar==9):
 		for first in range(10):
@@ -298,7 +312,7 @@ def Solve(arrChar, query, ans, file_input, file_output, tes):
 																	for nineth in range(10):
 																		if (nineth != first and nineth != scnd and nineth != thrd and nineth != fourth and nineth != fifth and nineth != sixth and nineth != seventh and nineth != eighth):
 																			arr = [first, scnd, thrd, fourth, fifth, sixth, seventh, eighth, nineth]
-																			updatePosNumber(arr, arrChar, query, ans)
+																			updatePosNumber(arr, arrChar, query, ans, tes[0], totest)
 																			tes[0] += 1
 	elif (totalChar==8):
 		for first in range(10):
@@ -317,7 +331,7 @@ def Solve(arrChar, query, ans, file_input, file_output, tes):
 															for eighth in range(10):
 																if (eighth != first and eighth != scnd and eighth != thrd and eighth != fourth and eighth != fifth and eighth != sixth and eighth != seventh):
 																	arr = [first, scnd, thrd, fourth, fifth, sixth, seventh, eighth]
-																	updatePosNumber(arr, arrChar, query, ans)
+																	updatePosNumber(arr, arrChar, query, ans, tes[0], totest)
 																	tes[0] += 1
 	elif (totalChar==7):
 		for first in range(10):
@@ -334,7 +348,7 @@ def Solve(arrChar, query, ans, file_input, file_output, tes):
 													for seventh in range(10):
 														if (seventh != first and seventh != scnd and seventh != thrd and seventh != fourth and seventh != fifth and seventh != sixth):
 															arr = [first, scnd, thrd, fourth, fifth, sixth, seventh]
-															updatePosNumber(arr, arrChar, query, ans)
+															updatePosNumber(arr, arrChar, query, ans, tes[0], totest)
 															tes[0] += 1
 	elif (totalChar==6):
 		for first in range(10):
@@ -349,7 +363,7 @@ def Solve(arrChar, query, ans, file_input, file_output, tes):
 											for sixth in range(10):
 												if (sixth != first and sixth != scnd and sixth != thrd and sixth != fourth and sixth != fifth):
 													arr = [first, scnd, thrd, fourth, fifth, sixth]
-													updatePosNumber(arr, arrChar, query, ans)
+													updatePosNumber(arr, arrChar, query, ans, tes[0], totest)
 													tes[0] += 1
 	elif (totalChar==5):
 		for first in range(10):
@@ -362,7 +376,7 @@ def Solve(arrChar, query, ans, file_input, file_output, tes):
 									for fifth in range (10):
 										if (fifth != first and fifth != scnd and fifth != thrd and fifth != fourth):
 											arr = [first, scnd, thrd, fourth, fifth]
-											updatePosNumber(arr, arrChar, query, ans)
+											updatePosNumber(arr, arrChar, query, ans, tes[0], totest)
 											tes[0] += 1
 	elif (totalChar==4):
 		for first in range(10):
@@ -373,30 +387,29 @@ def Solve(arrChar, query, ans, file_input, file_output, tes):
 							for fourth in range (10):
 								if (fourth != first and fourth != scnd and fourth != thrd):
 									arr = [first, scnd, thrd, fourth]
-									updatePosNumber(arr, arrChar, query, ans)
+									updatePosNumber(arr, arrChar, query, ans, tes[0], totest)
 									tes[0] += 1
 	
 	elif (totalChar==3):
-		#print("hallo")
 		for first in range(10):
 			for scnd in range(10):
 				if (scnd!=first):
 					for thrd in range(10):
 						if (thrd != first and thrd != scnd):
 							arr = [first, scnd, thrd]
-							updatePosNumber(arr, arrChar, query, ans)
+							updatePosNumber(arr, arrChar, query, ans, tes[0], totest)
 							tes[0] += 1
 	elif (totalChar==2):
 		for first in range(10):
 			for scnd in range(10):
 				if (scnd!=first):
 					arr = [first, scnd]
-					updatePosNumber(arr, arrChar, query, ans)
+					updatePosNumber(arr, arrChar, query, ans, tes[0], totest)
 					tes[0] += 1
 	elif (totalChar==1):
 		for first in range(10):
 			arr = [first]
-			updatePosNumber(arr, arrChar, query, ans)
+			updatePosNumber(arr, arrChar, query, ans, tes[0], totest)
 			tes[0] += 1
 	else:
 		file_outputt = ""
@@ -407,31 +420,40 @@ def Solve(arrChar, query, ans, file_input, file_output, tes):
 		file_outputt += "====================================================================================================\n         Maaf jumlah total huruf masukkannya lebih dari 10 huruf, tidak bisa diselesaikan :)\n====================================================================================================\n"
 		file_output += [file_outputt]
 	if (1<= totalChar <= 10):
+		temptotest = []
 		if (isFirstExist(arrChar)):
-			cleanFIrstnol(arrChar)					
+			cleanFIrstnol(arrChar, totest, temptotest)					
+		totest = temptotest
+		tempt += totest
 		printHasil(arrChar, query, ans, file_input, file_output)
 
+# FUNGSI UNTUK SAVE OUTPUT PADA FILE
 def saveFile(file_output, namaFile):
-	file = open("../doc/"+namaFile, "w")
+	file = open("../test/"+namaFile, "w")
 	file.write(file_output)
 	file.close()
 	
-			
+# MAIN 		
 def Main():		
 	arrChar = [0 for i in range(26)]					
-	file_input = readInputFromFile("input9.txt")
+	file_input = readInputFromFile("input10.txt")
 	query = []
 	ans = []
 	file_output = []
 	tes = [0]
+	totest = []
+	tempt = []
 	distinguishOpr(query, ans, file_input)
 	buildArrChar(arrChar, query, ans)
 	start_time = time.time()
-	Solve(arrChar, query, ans, file_input, file_output, tes)
+	Solve(arrChar, query, ans, file_input, file_output, tes, totest, tempt)
 	print("====================================================================================================")
 	print("----------------------------- %s seconds -----------------------------" %(time.time() - start_time))
 	print("----------------------------- "+ str(tes[0]) + " total test -----------------------------")
 	file_output[0] += "====================================================================================================\n" +  "----------------------------- %s seconds -----------------------------\n" %(time.time() - start_time) + "----------------------------- "+ str(tes[0]) + " total test -----------------------------\n"
-	saveFile(file_output[0], "output9.txt")
+	for i in range(len(tempt)):
+		print("Solusi ke-[" + str(i+1) + "] ditemukan pada test ke-" + str(tempt[i]))
+		file_output[0] += "Solusi ke-[" + str(i+1) + "] ditemukan pada test ke-" + str(tempt[i]) + "\n"
+	saveFile(file_output[0], "output10.txt")
 	
 Main()
