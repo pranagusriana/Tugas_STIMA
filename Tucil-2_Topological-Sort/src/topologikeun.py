@@ -56,7 +56,7 @@ while (not(P!="Y" or P!="N")):
 
 if (P == "Y"):
     O = input("Masukkan nama file: ")
-    while (os.path.isfile("../test/"+O)):
+    while (os.path.isfile("../test/"+O)): # HANYA DAPAT MENYIMPAN KE FILE EKSTERNAL DENGAN NAMA YANG BELUM ADA
         print("Nama file telah digunakan silahkan masukkan kembali input nama file,")
         O = input("Masukkan nama file: ")
     FileProcesses.saveFile(file_output[0], O) # MENYIMPAN SOLUSI PADA FILE EKSTERNAL

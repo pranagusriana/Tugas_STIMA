@@ -22,6 +22,7 @@ CLASS DirectedAcyclicGraph : digunakan untuk membuat objek DAG yang direpresenta
         <kode_kuliah_2>,<kode_kuliah_prasyarat_1>.
         <kode_kuliah_3>.
       Jika tidak maka akan terjadi error
+      Semua matkul harus ditulis meskipun tidak memiliki prerequisite untuk menghindari error.
 """
 
 class DirectedAcyclicGraph:
@@ -41,6 +42,7 @@ class DirectedAcyclicGraph:
             prereq = []
             koma = 0
             strret = ""
+            # Memproses input file yang berbentuk <kode_kuliah_1>,<kode_kuliah_prasyarat_1>,<kode_kuliah_prasyarat2>.
             while (j < len(fileInput[i])):
                 if (fileInput[i][j] != '.'):
                     if (fileInput[i][j] != ','):
@@ -58,9 +60,10 @@ class DirectedAcyclicGraph:
                     else:
                         course += [strret]
                 j += 1
+            # Membuat simpul course dan sisi yang masuk dari prerequisite ke simpul course
             self.DAG[course[0]]=prereq
             i += 1
-        for i in self.DAG:
+        for i in self.DAG: # Penambahan semua course yang ada kedalam atribut course
             self.course += [i]
 
     # Untuk menampilkan DAG, course, dan semester, untuk keperluan debug
@@ -71,7 +74,8 @@ class DirectedAcyclicGraph:
 
     # Menerima input parameter berupa node yang akan dihapus
     def delNode(self, node):
-        del self.DAG[node]
+        del self.DAG[node] # Hapus simpul
+        # Hapus sisi yang keluar dari simpul yang dihapus
         for i in self.DAG:
             temparr = []
             for j in self.DAG[i]:
@@ -104,6 +108,8 @@ class DirectedAcyclicGraph:
             self.topologiin(n, i)
             i += 1
 
+    # menampilkan persoalan dari yang berbentuk <kode_kuliah_1>,<kode_kuliah_prasyarat_1>,<kode_kuliah_prasyarat2>.
+    # menjadi berbentuk <kode_kuliah_1> <- <kode_kuliah_prasyarat_1> <- <kode_kuliah_prasyarat2>
     def printInput(self, file_output):
         strout = ""
         for i in self.DAG:
@@ -115,6 +121,7 @@ class DirectedAcyclicGraph:
             print(stret)
         file_output[0] += strout
     
+    # Menampilkan solusi yang berupa Semester x : matkul1 matkul2 matkul3
     def printSolusi(self, file_output):
         s = 1
         strout = ""
