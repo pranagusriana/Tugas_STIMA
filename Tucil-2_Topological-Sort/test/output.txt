@@ -1,0 +1,18 @@
+==============================
+          Persoalan: 
+==============================
+C1 <- C3
+C2 <- C1 <- C4
+C3
+C4 <- C1 <- C3
+C5 <- C2 <- C4
+==============================
+           Solusi: 
+==============================
+Semester 1 : C3 
+Semester 2 : C1 
+Semester 3 : C4 
+Semester 4 : C2 
+Semester 5 : C5 
+
+By: Prana Gusriana, 13519195, IF2211 Strategi Algoritma 2021 (TUCIL 2)
