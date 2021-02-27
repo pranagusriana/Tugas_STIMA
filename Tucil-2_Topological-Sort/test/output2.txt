@@ -1,0 +1,16 @@
+==============================
+          Persoalan: 
+==============================
+MAT1A
+MAT2A <- MAT1A
+ALSTRUKDAT <- DASPRO
+DASPRO
+FIS2A <- FIS1A
+FIS1A
+==============================
+           Solusi: 
+==============================
+Semester 1 : MAT1A DASPRO FIS1A 
+Semester 2 : MAT2A ALSTRUKDAT FIS2A 
+
+By: Prana Gusriana, 13519195, IF2211 Strategi Algoritma 2021 (TUCIL 2)

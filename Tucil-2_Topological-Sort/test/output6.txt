@@ -1,0 +1,24 @@
+==============================
+          Persoalan: 
+==============================
+PROBSTAT <- MAT1A <- MAT2A <- MATDIS
+STIMA <- ALSTRUKDAT <- MATDIS
+TBFO <- DASPRO
+LOGKOM <- DASPRO <- PENGKOM
+PENGKOM
+AI <- LOGKOM <- TBFO <- PROBSTAT <- STIMA
+DASPRO <- PENGKOM
+MATDIS <- MAT1A <- MAT2A
+MAT1A
+MAT2A <- MAT1A
+ALSTRUKDAT <- DASPRO
+==============================
+           Solusi: 
+==============================
+Semester 1 : PENGKOM MAT1A 
+Semester 2 : DASPRO MAT2A 
+Semester 3 : TBFO LOGKOM MATDIS ALSTRUKDAT 
+Semester 4 : PROBSTAT STIMA 
+Semester 5 : AI 
+
+By: Prana Gusriana, 13519195, IF2211 Strategi Algoritma 2021 (TUCIL 2)

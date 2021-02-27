@@ -1,0 +1,37 @@
+==============================
+          Persoalan: 
+==============================
+FIS1A
+FIS2A <- FIS1A
+MAT1A
+MAT2A <- MAT1A
+PENGKOM
+DASPRO <- PENGKOM
+TBFO <- DASPRO
+MATDIS <- MAT1A <- MAT2A
+LOGKOM <- DASPRO <- PENGKOM
+ALGEO <- MAT1A <- MAT2A
+ALSTRUKDAT <- DASPRO
+ORKOM <- DASPRO
+PROBSTAT <- MAT1A <- MAT2A <- MATDIS
+STIMA <- ALSTRUKDAT <- MATDIS
+PBO <- ALSTRUKDAT
+AI <- LOGKOM <- TBFO <- PROBSTAT <- STIMA
+WEB <- PBO <- ALSTRUKDAT
+OS <- ORKOM <- ALSTRUKDAT
+JARKOM <- OS
+BASDAT <- LOGKOM
+SI <- BASDAT
+GRAFIKAKOM <- ORKOM <- ALSTRUKDAT <- ALGEO
+ML <- AI <- ALSTRUKDAT
+==============================
+           Solusi: 
+==============================
+Semester 1 : FIS1A MAT1A PENGKOM 
+Semester 2 : FIS2A MAT2A DASPRO 
+Semester 3 : TBFO MATDIS LOGKOM ALGEO ALSTRUKDAT ORKOM 
+Semester 4 : PROBSTAT STIMA PBO OS BASDAT GRAFIKAKOM 
+Semester 5 : AI WEB JARKOM SI 
+Semester 6 : ML 
+
+By: Prana Gusriana, 13519195, IF2211 Strategi Algoritma 2021 (TUCIL 2)

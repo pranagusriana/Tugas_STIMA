@@ -1,0 +1,22 @@
+==============================
+          Persoalan: 
+==============================
+MATDIS <- MAT1A <- MAT2A
+ORKOM <- DASPRO
+ALSTRUKDAT <- DASPRO
+PENGKOM
+DASPRO <- PENGKOM
+MAT1A
+MAT2A <- MAT1A
+OS <- ORKOM
+STIMA <- ALSTRUKDAT
+PBO <- ALSTRUKDAT <- DASPRO
+==============================
+           Solusi: 
+==============================
+Semester 1 : PENGKOM MAT1A 
+Semester 2 : DASPRO MAT2A 
+Semester 3 : MATDIS ORKOM ALSTRUKDAT 
+Semester 4 : OS STIMA PBO 
+
+By: Prana Gusriana, 13519195, IF2211 Strategi Algoritma 2021 (TUCIL 2)

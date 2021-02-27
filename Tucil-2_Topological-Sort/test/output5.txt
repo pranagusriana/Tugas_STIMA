@@ -1,0 +1,15 @@
+==============================
+          Persoalan: 
+==============================
+MAT1A
+FIS1A
+PENGKOM
+TTKI
+BING
+OR
+==============================
+           Solusi: 
+==============================
+Semester 1 : MAT1A FIS1A PENGKOM TTKI BING OR 
+
+By: Prana Gusriana, 13519195, IF2211 Strategi Algoritma 2021 (TUCIL 2)
